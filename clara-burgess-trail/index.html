@@ -471,7 +471,11 @@
                 updateGraphic(point);
                 updateDistanceUI(point);
               } else {
-                navigateFinsihed();
+                app.task.remove();
+                app.animating = false;
+                app.trailDistance = 0;  
+                app.index = 0;
+                setPlayUI(false);
               }
               app.index++;
             }
@@ -521,16 +525,7 @@
         }
         var lastPoint = getPoint(app.index -1);
         app.trailDistance += geometryEngine.distance(lastPoint, point, "miles");
-        query(".distance-value").innerHTML((Math.round(app.trailDistance*100)/100).toFixed(2));
-      }
-
-      function navigateFinsihed() {
-        // query("#play > span").replaceClass("glyphicon-play","glyphicon-pause");
-        setPlayUI(true);
-        app.animating = false;
-        app.task.remove();
-        app.trailDistance = 0;
-        app.index = 0;
+        query(".distance-value").innerHTML((Math.round(app.trailDistance*100)/100).toFixed(2) + " miles");
       }
 
       function setPlayUI(play) {
