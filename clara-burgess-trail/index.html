@@ -603,7 +603,7 @@
           })
 
         }
-        if (toView.isInstanceOf(SceneView) && !toView.ready) {
+        if (toView.isInstanceOf(SceneView) && (!toView.ready || toView.updating)) {
           watchUtils.whenTrueOnce(toView, "ready").then(function(isReady) {
             sync();
           });
