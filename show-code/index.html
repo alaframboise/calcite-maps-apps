@@ -9,8 +9,8 @@
 	<link rel="icon" href="http://www.esri.com/favicon.ico">
 	<title>Calcite-Maps - ArcGIS 4.x</title>
 
-	<!-- Calcite-Maps -->
-	<link rel="stylesheet" href="../../dist/css/calcite-maps-arcgis-4.x.min.css">
+	<!-- Calcite Maps -->
+  <link rel="stylesheet" href="http://esri.github.io/calcite-maps/dist/css/calcite-maps-arcgis-4.x.min.css">
 
 	<!-- ArcGIS JS 4.0 NOTE: This is a QA build. Use at own risk! -->
 	<link rel="stylesheet" href="http://js.arcgis.com/4.0/esri/css/main.css">
@@ -32,6 +32,10 @@
 	    top: 15px;
 	    right: 15px;
 	    max-width: 550px; /* max width of code window */
+	  }
+
+	  .calcite-maps .panel {
+	  	overflow: auto;
 	  }
 
 	  .calcite-maps .panel-body {
@@ -77,11 +81,11 @@
 	</style>
 </head>
 
-<body class="calcite-maps map-position-absolute nav-position-top nav-space-none">
+<body class="calcite-maps map-position-absolute nav-position-top">
 
 	<!-- Navbar -->
 
-	<nav class="navbar navbar-fixed-top calcite-text-light calcite-dark-blue-75">
+	<nav class="navbar navbar-fixed-top calcite-text-light calcite-blue-75">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mainNav" aria-expanded="false">
@@ -93,9 +97,9 @@
 				<a class="navbar-brand">
 					<span class="esri-icon esri-icon-map-pin"></span>
 				</a>
-				<div class="navbar-info">
-					<div class="navbar-title text-overflow" data-toggle="modal" data-target="#modalSplash">Calcite Maps - Show Code Demo</div>
-					<div class="navbar-subtitle text-overflow">This sample illustrates how to show code for your demos</div> 
+				<div class="navbar-title">
+					<div class="navbar-main-title text-overflow" data-toggle="modal" data-target="#modalSplash">Calcite Maps - Show Code Demo</div>
+					<div class="navbar-sub-title text-overflow">This sample illustrates how to show code for your demos</div> 
 				</div>
 			</div>
 
@@ -177,20 +181,20 @@ activeView = app.sceneView;
 		</div> <!-- /.panel-group -->
 	</div> <!-- /.panel-container -->
 
-	<script type="text/javascript">
-		var dojoConfig = {
-			packages: [{
-				name: "bootstrap",
-				//location: "https://esri.github.io/calcite-maps/dist/vendor/dojo-bootstrap"
-				location: location.pathname.replace(/\/[^/]+$/, "") + "./../../dist/vendor/dojo-bootstrap"
-			},
-			{
-				name: "calcite-maps",
-				//location: "https://esri.github.io/calcite-maps/dist/js/dojo"
-				location: location.pathname.replace(/\/[^/]+$/, "") + "./../../dist/js/dojo"
-			}]
-		};
-	</script>
+  <script type="text/javascript">
+    var dojoConfig = {
+      packages: [{
+        name: "bootstrap",
+        location: "https://esri.github.io/calcite-maps/dist/vendor/dojo-bootstrap"
+        //location: location.pathname.replace(/\/[^/]+$/, "") + "./../../dist/vendor/dojo-bootstrap"
+      },
+      {
+        name: "calcite-maps",
+        location: "https://esri.github.io/calcite-maps/dist/js/dojo"
+        //location: location.pathname.replace(/\/[^/]+$/, "") + "./../../dist/js/dojo"
+      }]
+    };
+  </script>
 
   <!-- ArcGIS JS 4.0 NOTE: This is a QA build. Use at own risk! -->
   <script src="http://js.arcgis.com/4.0/"></script>
