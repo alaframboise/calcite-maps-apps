@@ -9,10 +9,13 @@
   <link rel="icon" href="http://www.esri.com/favicon.ico">
   <title>Clara Burgess Trail Explorer</title>
 
-  <!-- Calcite Maps -->
-  <link rel="stylesheet" href="http://esri.github.io/calcite-maps/dist/css/calcite-maps-arcgis-4.x.min.css">
+  <!-- Calcite Bootstrap -->
+  <link rel="stylesheet" href="http://esri.github.com/calcite-maps/dist/css/calcite-bootstrap.min-v0.2.css">
 
-  <!-- ArcGIS JS 4.0 NOTE: This is a QA build. Use at own risk! -->
+  <!-- Calcite Maps -->
+  <link rel="stylesheet" href="http://esri.github.com/calcite-maps/dist/css/calcite-maps-arcgis-4.x.min-v0.2.css">
+  
+  <!-- ArcGIS JS 4.0 -->
   <link rel="stylesheet" href="http://js.arcgis.com/4.0/esri/css/main.css">
 
   <style>
@@ -20,6 +23,16 @@
       margin: 0;
       padding: 0;
       height: 100%;
+    }
+
+    .calcite-panels .panel-body {
+      max-height: 350px;
+    }
+
+    .btn-custom {
+      border: #333;
+      color: #333;
+      background-color: #fff;
     }
 
     #play, #stop, .distance-container {
@@ -39,63 +52,57 @@
   </style>
 </head>
 
-<body class="calcite-maps map-position-absolute nav-position-top nav-space-all layout-inline-left">
+<body class="calcite-nav-top nav-space-all layout-inline-left">
 
   <!-- Navbar -->
 
-  <nav class="navbar navbar-fixed-top calcite-text-light calcite-brown-75">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mainNav" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand">
-          <span class="esri-icon esri-icon-map-pin"></span>
-        </a>
-        <div class="navbar-title">
-          <div class="navbar-main-title text-overflow" data-toggle="modal" data-target="#modalSplash">Clara Burgess Trail Explorer</div>
-          <div class="navbar-sub-title text-overflow" data-toggle="modal" data-target="#modalSplash">Explore the foothills of Palm Springs</div> 
-        </div>
-      </div>
+  <nav class="navbar navbar-fixed-top calcite-navbar calcite-bg-dark calcite-text-light calcite-bgcolor-brown-75">
+    <!-- Header -->
+    <div class="navbar-header">
+      <a class="navbar-brand" data-toggle="modal" data-target="#modalSplash"><span class="esri-icon esri-icon-map-pin"></span></a>
+    </div>
+    <!-- Title -->
+    <div class="calcite-title calcite-overflow-hidden">
+      <div class="calcite-title-main">Clara Burgess Trail</div>
+      <div class="calcite-title-sub">Explore the foothills of Palm Springs</div> 
+    </div>
+    <!-- Nav -->
+    <ul class="nav navbar-nav">                    
+      <li class="active"><a id="mapNav" class="hidden-xs hidden-sm" href="#2dTab" aria-controls="2Dtab" aria-expanded="true" role="tab" data-toggle="tab" data-tooltip="tip" title="2D View" data-placement="bottom">Map</a></li>
+      <li><a id="sceneNav" class="hidden-xs hidden-sm" href="#3dTab" aria-controls="3Dtab" role="tab" data-toggle="tab" data-tooltip="tip" title="3D View" data-placement="bottom">Scene</a></li>                  
+      <li><div class="calcite-navbar-search hidden-xs"><div id="searchNavDiv"></div></div></li>
+    </ul>
+    <!-- Dropdown Menu -->
+    <div class="dropdown calcite-dropdown calcite-bg-light calcite-text-dark" role="presentation">
+      <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="sr-only">Toggle dropdown menu</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a class="hidden-md hidden-lg" href="#2dTab" aria-controls="2Dtab" role="tab" data-toggle="tab"> Map</a></li>
+        <li><a class="hidden-md hidden-lg" href="#3dTab" aria-controls="3Dtab" role="tab" data-toggle="tab"> Scene</a></li>
+        <li><a role="button" data-target="#panelInfo" aria-haspopup="true"><span class="glyphicon glyphicon-info-sign"></span> Trail Info</a></li>
+        <li><a class="visible-xs" role="button" data-target="#panelSearch" aria-haspopup="true"><span class="glyphicon glyphicon-search"></span> Search</a></li>
+        <li><a role="button" data-target="#panelPlayer" aria-haspopup="true"><span class="glyphicon glyphicon-th-large"></span> Player</a></li>
+      </ul>
+    </div> 
 
-      <!-- Navbar collapse -->
-      <div id="mainNav" class="collapse navbar-collapse" aria-expanded="false">
-        <ul class="nav navbar-nav navbar-right">                    
-         <!-- Primary Nav - Map and Scene -->
-          <li class="active"><a id="mapNav" class="hidden-xs hidden-sm" href="#2dTab" aria-controls="2Dtab" aria-expanded="true" role="tab" data-toggle="tab" data-tooltip="tip" title="2D View" data-placement="bottom">2D</a></li>
-          <li><a id="sceneNav" class="hidden-xs hidden-sm" href="#3dTab" aria-controls="3Dtab" role="tab" data-tooltip="tip" data-toggle="tab" title="3D View" data-placement="bottom">3D</a></li>                  
-          <li><form id="searchNav" class="navbar-form navbar-search hidden-xs visible-sm visible-md visible-lg"><div id="searchNavDiv"></div></form></li>
-          <!-- Secondary Nav - options dropdown menu -->
-          <li class="dropdown" role="presentation">
-            <a class="dropdown-toggle hidden-xs" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="esri-icon esri-icon-menu" aria-hidden="true"></span></a>
-            <ul class="dropdown-menu">
-              <li><a class="visible-xs visible-sm hidden-md hidden-lg" href="#2dTab" aria-controls="2Dtab" role="tab" data-toggle="tab">2D</a></li>
-              <li><a class="visible-xs visible-sm hidden-md hidden-lg" href="#3dTab" aria-controls="3Dtab" role="tab" data-toggle="tab">3D</a></li>
-              <li><a role="button" data-target="#panelInfo" aria-haspopup="true"><span class="glyphicon glyphicon-info-sign"></span> Trail Info</a></li>
-              <li><a class="visible-xs" role="button" data-target="#panelSearch" aria-haspopup="true"><span class="glyphicon glyphicon-search"></span> Search</a></li>
-              <li><a role="button" data-target="#panelPlayer" aria-haspopup="true"><span class="glyphicon glyphicon-th-large"></span> Player</a></li>
-            </ul>
-          </li>      
-        </ul><!--/.nav -->
-      </div><!--/.nav-collapse -->
-    </div><!--/.container-fluid -->
   </nav><!--/.navbar -->
 
   <!-- Map Container  -->
 
-  <div class="map-container">
+  <div class="calcite-map calcite-map-absolute">
     <div id="tabContainer" class="tab-content">
       <div id="2dTab" class="tab-pane fade in active" role="tabpanel">
-         <div id="mapViewDiv" class="map-position-absolute"></div>
+        <div id="mapViewDiv"></div>
       </div>
       <div id="3dTab" class="tab-pane fade" role="tabpanel">
-        <div id="sceneViewDiv" class="map-position-absolute"></div>
+        <div id="sceneViewDiv"></div>
       </div>
     </div>
-  </div><!-- /.container -->
+  </div>
 
   <!-- Modal Window -->
 
@@ -128,78 +135,76 @@
     </div>
   </div>
 
-  <!-- Panel -->
-
-  <div class="panel-container">
-    <div id="panelAccordion" class="panel-group"  role="tablist" aria-multiselectable="true">
-      
-      <!-- Info Panel -->
-      
-      <div id="panelInfo" class="panel collapse">
-        <div id="headingInfo" class="panel-heading" role="tab">
-          <div class="panel-title">
-            <a class="panel-toggle" role="button" data-toggle="collapse" href="#collapseInfo" data-parent="#panelAccordion" aria-expanded="true" aria-controls="collapseInfo"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Trail Info</a>
-            <a class="panel-close" role="button" data-toggle="collapse" data-target="#panelInfo"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>  
-          </div>
-        </div>
-        <div id="collapseInfo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingInfo">
-            <div class="panel-body">
-                <img class="size-medium wp-image-254 retinized" style="padding-left:0px; padding-bottom: 20px;" src="http://www.hiking-in-ps.com/wp-content/uploads/2015/06/manip_murraytopw-300x198.jpg" alt="Murray Hill" width="320" height="198" srcset="http://www.hiking-in-ps.com/wp-content/uploads/2015/06/manip_murraytopw-300x198.jpg 300w, http://www.hiking-in-ps.com/wp-content/uploads/2015/06/manip_murraytopw.jpg 400w" sizes="(max-width: 300px) 100vw, 300px">
-                <p><b>Clara Burgess Trail Loop</b><br>
-                3.5 Miles<br>
-                Beginning Elevation 900′<br>
-                Strenuous With an elevation gain of 1,400′<br><br>
-                If you are ready to experience some of the most beautiful hiking the Palm Springs area has to offer, grab your CamelBak, other Hydration Pack or Hydroflask and get out on the trail!
-                </p>
-            </div>
+  <!-- Panels -->
+  
+  <div class="calcite-panels calcite-bg-custom calcite-text-light calcite-bgcolor-brown-75 panel-group" role="tablist" aria-multiselectable="true">
+    
+    <!-- Info Panel -->
+    
+    <div id="panelInfo" class="panel collapse">
+      <div id="headingInfo" class="panel-heading" role="tab">
+        <div class="panel-title">
+          <a class="panel-toggle" role="button" data-toggle="collapse" href="#collapseInfo" data-parent="#panelAccordion" aria-expanded="true" aria-controls="collapseInfo"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Trail Info</a>
+          <a class="panel-close" role="button" data-toggle="collapse" data-target="#panelInfo"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>  
         </div>
       </div>
-      
-      <!-- Search Panel -->
-
-      <div id="panelSearch" class="panel collapse hidden-sm hidden-md hidden-lg">
-        <div id="headingSearch" class="panel-heading" role="tab">
-          <div class="panel-title">
-            <a class="panel-toggle collapsed" role="button" data-toggle="collapse" href="#collapseSearch" data-parent="#panelAccordion" aria-expanded="false" aria-controls="collapseSearch"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</a>
-            <a class="panel-close" role="button" data-toggle="collapse" data-target="#panelSearch"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>        
-          </div>
-        </div>
-        <div id="collapseSearch" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSearch">
-          <div class="panel-body panel-overflow-visible"> 
-            <div id="searchPanelDiv"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Player Panel -->
-      
-      <div id="panelPlayer" class="panel collapse in"> 
-        <div id="headingPlayer" class="panel-heading" role="tab">
-          <div class="panel-title">
-            <a class="panel-toggle collapsed" role="button" data-toggle="collapse" href="#collapsePlayer" aria-expanded="false" data-parent="#panelAccordion"  aria-controls="collapsePlayer"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Player</a>
-            <a class="panel-close" role="button" data-toggle="collapse" data-target="#panelPlayer"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>  
-          </div>
-        </div>
-        <div id="collapsePlayer" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingPlayer">
+      <div id="collapseInfo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingInfo">
           <div class="panel-body">
-            
-            <button id="play" class="btn btn-xs">          
-              <span class="glyphicon glyphicon-play"></span>
-            </button>
-
-            <button id="stop" class="btn btn-xs">          
-              <span class="glyphicon glyphicon-refresh"></span>
-            </button>
-
-            <div class="distance-container">
-              <div class="distance-label">Distance:&nbsp;</div><div class="distance-value">0.0</div>
-            </div>
-
+              <img class="size-medium wp-image-254 retinized" style="padding-left:0px; padding-bottom: 20px;" src="http://www.hiking-in-ps.com/wp-content/uploads/2015/06/manip_murraytopw-300x198.jpg" alt="Murray Hill" width="320" height="198" srcset="http://www.hiking-in-ps.com/wp-content/uploads/2015/06/manip_murraytopw-300x198.jpg 300w, http://www.hiking-in-ps.com/wp-content/uploads/2015/06/manip_murraytopw.jpg 400w" sizes="(max-width: 300px) 100vw, 300px">
+              <p><b>Clara Burgess Trail Loop</b><br>
+              3.5 Miles<br>
+              Beginning Elevation 900′<br>
+              Strenuous With an elevation gain of 1,400′<br><br>
+              If you are ready to experience some of the most beautiful hiking the Palm Springs area has to offer, grab your CamelBak, other Hydration Pack or Hydroflask and get out on the trail!
+              </p>
           </div>
+      </div>
+    </div>
+    
+    <!-- Search Panel -->
+
+    <div id="panelSearch" class="panel collapse hidden-sm hidden-md hidden-lg">
+      <div id="headingSearch" class="panel-heading" role="tab">
+        <div class="panel-title">
+          <a class="panel-toggle collapsed" role="button" data-toggle="collapse" href="#collapseSearch" data-parent="#panelAccordion" aria-expanded="false" aria-controls="collapseSearch"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</a>
+          <a class="panel-close" role="button" data-toggle="collapse" data-target="#panelSearch"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>        
         </div>
       </div>
-    </div> <!-- /.panel-group -->
-  </div> <!-- /.panel-container -->
+      <div id="collapseSearch" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSearch">
+        <div class="panel-body panel-overflow-visible"> 
+          <div id="searchPanelDiv"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Player Panel -->
+    
+    <div id="panelPlayer" class="panel collapse in"> 
+      <div id="headingPlayer" class="panel-heading" role="tab">
+        <div class="panel-title">
+          <a class="panel-toggle collapsed" role="button" data-toggle="collapse" href="#collapsePlayer" aria-expanded="false" data-parent="#panelAccordion"  aria-controls="collapsePlayer"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Player</a>
+          <a class="panel-close" role="button" data-toggle="collapse" data-target="#panelPlayer"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>  
+        </div>
+      </div>
+      <div id="collapsePlayer" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingPlayer">
+        <div class="panel-body">
+          
+          <button id="play" class="btn btn-custom btn-xs">          
+            <span class="glyphicon glyphicon-play"></span>
+          </button>
+
+          <button id="stop" class="btn btn-custom btn-xs">          
+            <span class="glyphicon glyphicon-refresh"></span>
+          </button>
+
+          <div class="distance-container">
+            <div class="distance-label">Distance:&nbsp;</div><div class="distance-value">0.0</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div> <!-- /.panel-group -->
 
   <script type="text/javascript">
     var dojoConfig = {
@@ -216,7 +221,7 @@
     };
   </script>
 
-  <!-- ArcGIS JS 4.0 NOTE: This is a QA build. Use at own risk! -->
+  <!-- ArcGIS JS 4.0 -->
   <script src="http://js.arcgis.com/4.0/"></script>
 
   <script>
@@ -259,7 +264,7 @@
       "bootstrap/Modal",
       
       // Calcite-maps
-      "calcite-maps/calcitemaps",
+      "calcite-maps/calcitemaps-v0.2",
       "dojo/domReady!"
     ], function(Map, Basemap, MapView, SceneView, Camera, FeatureLayer, SceneLayer, Popup, PopupTemplate, Search, Locate, BasemapToggle, Component, watchUtils, Scheduler, Point, SimpleMarkerSymbol, PointSymbol3D, ObjectSymbol3DLayer, Graphic, geometryEngine, query, keys, on, dom) {
         
@@ -274,7 +279,7 @@
         sceneView: null,
         activeView: null,
         viewPadding: {
-            top: 0
+          top: 65
         },
         layer: null,
         layerUrl: "http://services.arcgis.com/uCXeTVveQzP4IIcx/arcgis/rest/services/Clara_Burgess_Trail/FeatureServer/1",
