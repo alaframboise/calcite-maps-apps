@@ -13,7 +13,8 @@
   <link rel="stylesheet" href="https://esri.github.io/calcite-maps/dist/css/calcite-bootstrap.min-v0.2.css">
 
   <!-- Calcite Maps -->
-  <link rel="stylesheet" href="http://localhost/GitHub/calcite-maps/dist/css/calcite-maps-arcgis-4.x.min-v0.2.css">
+  <link rel="stylesheet" href="https://esri.github.io/calcite-maps/dist/css/calcite-maps-arcgis-4.x.min-v0.2.css">
+  <!--link rel="stylesheet" href="http://localhost/GitHub/calcite-maps/dist/css/calcite-maps-arcgis-4.x.min-v0.2.css"-->
 
   <!-- ArcGIS JS 4.0 -->
   <link rel="stylesheet" href="http://js.arcgis.com/4.0/esri/css/main.css">
@@ -28,33 +29,27 @@
       height: 100%;
     }
 
-    /* Pre - style the code */
+    /* Style the code window */
     
     pre.prettyprint {
-      width: 100%;
       margin: 0;
       padding-bottom: 0;
+      width: 100%;
       border: 0;
       font-size: 15px; /* Sizes: 13px (small) 15px (normal) 17px (large) */
     }
 
-    /* Panels - size of the code window */
-
-    .calcite-panels {
-      width: auto;
-      /*width: 450px;*/
-    }
+    /* Adjust size of the code window */
 
     .calcite-panels .panel-body {
-      padding: 10px;
+      width: 350px;
       max-height: 700px;
+      padding: 10px;
     }
 
     @media (max-width: 768px) {
-      .calcite-panels {
-        width: 100%;
-      }
       .calcite-panels .panel-body {
+        width: 100%;
         max-height: 250px;
       }
     }
@@ -63,45 +58,48 @@
 
 </head>
 
-<body class="calcite-nav-top calcite-widgets-dark">
+<body class="calcite-nav-top">
 
 <!-- Navbar -->
 
-  <nav class="navbar calcite-navbar navbar-fixed-top calcite-text-light calcite-bg-dark">
-    <!-- Header -->
-    <div class="navbar-header">
-      <a class="navbar-brand"><span class="esri-icon esri-icon-map-pin"></span></a>
-    </div>
-    <!-- Title -->
-    <div class="calcite-title calcite-overflow-hidden">
-      <div class="calcite-title-main">Show Code Demo</div>
-      <div class="calcite-title-sub">This sample illustrates how to show code for demos</div> 
-    </div>
-     <!-- Nav -->
-    <ul class="nav navbar-nav">                    
-      <li><a id="mapNav" class="hidden-xs hidden-sm" href="#2dTab" aria-controls="2Dtab" aria-expanded="true" role="tab" data-toggle="tab" data-tooltip="tip" title="2D View" data-placement="bottom">Map</a></li>
-      <li class="active"><a id="sceneNav" class="hidden-xs hidden-sm" href="#3dTab" aria-controls="3Dtab" role="tab" data-toggle="tab" data-tooltip="tip" title="3D View" data-placement="bottom">Scene</a></li>                  
-      <li><div class="calcite-navbar-search calcite-search-expander"><div id="searchWidgetDiv"></div></div></li>
-       <!-- Dropdown -->
-    <div class="dropdown calcite-dropdown calcite-bg-dark calcite-text-light" role="presentation">
-      <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span class="sr-only">Toggle dropdown menu</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
+  <nav class="navbar calcite-navbar navbar-fixed-top calcite-text-light calcite-bgcolor-off-black">
+    
+    <!-- Menu -->
+    <div class="dropdown calcite-dropdown calcite-text-dark calcite-bg-light" role="presentation">
+      <a class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">
+        <div class="calcite-dropdown-toggle">
+          <span class="sr-only">Toggle dropdown menu</span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </a>
       <ul class="dropdown-menu">
-        <li><a class="hidden-md hidden-lg" href="#2dTab" aria-controls="2Dtab" role="tab" data-toggle="tab"> Map</a></li>
-        <li class="active"><a class="hidden-md hidden-lg" href="#3dTab" aria-controls="3Dtab" role="tab" data-toggle="tab"> Scene</a></li>
-        <li><a role="button" data-target="#panelCode" aria-haspopup="true"><span class="glyphicon glyphicon-wrench"></span> Show Code</a></li>          
+        <li><a class="hidden-sm hidden-md" href="#2dTab" aria-controls="2Dtab" role="tab" data-toggle="tab"> Map</a></li>
+        <li class="active"><a class="hidden-sm hidden-md" href="#3dTab" aria-controls="3Dtab" role="tab" data-toggle="tab"> Scene</a></li>
+        <li><a role="button" data-target="#panelBasemaps" aria-haspopup="true"><span class="glyphicon glyphicon-th-large"></span> Basemaps</a></li>
+        <li><a role="button" data-target="#panelCode" aria-haspopup="true"><span class="glyphicon glyphicon-cog"></span> Code</a></li>
+        <li><a role="button" id="calciteToggleNavbar" aria-haspopup="true"><span class="glyphicon glyphicon-fullscreen"></span> Full Map</a></li>
       </ul>
+    </div><!-- Title -->
+    <div class="calcite-title calcite-overflow-hidden">
+      <div class="calcite-title-main">ArcGIS JS 4.0</div>
+      <div class="calcite-title-divider hidden-xs"></div>
+      <div class="calcite-title-sub hidden-xs">This is a demo starter app</div> 
+    </div>
+    <!-- Nav -->
+    <ul class="nav navbar-nav calcite-nav">                    
+      <li><a id="mapNav" class="hidden-xs" href="#2dTab" aria-controls="2Dtab" aria-expanded="true" role="tab" data-toggle="tab" data-tooltip="tip" title="2D View" data-placement="bottom">Map</a></li>
+      <li class="active"><a id="sceneNav" class="hidden-xs" href="#3dTab" aria-controls="3Dtab" role="tab" data-toggle="tab" data-tooltip="tip" title="3D View" data-placement="bottom">Scene</a></li>                  
+      <li><div class="calcite-navbar-search calcite-search-expander"><div id="searchWidgetDiv"></div></div></li>
     </ul>
     </div>
   </nav><!--/.calcite-navbar -->
 
   <!-- Map  -->
 
-  <div class="calcite-map map-position-absolute">
+  <div class="calcite-map calcite-map-absolute">
     <div id="tabContainer" class="tab-content">
       <div id="2dTab" class="tab-pane fade" role="tabpanel">
          <div id="mapViewDiv"></div>
@@ -114,19 +112,46 @@
 
   <!-- Panels -->
 
-  <div class="calcite-panels calcite-text-light calcite-bg-dark calcite-bgcolor-black panel-group">
+  <div class="calcite-panels calcite-panels-right calcite-text-light calcite-bg-dark calcite-bgcolor-black panel-group">
     
+    <!-- Basemaps Panel -->
+    
+    <div id="panelBasemaps" class="panel collapse"> 
+      <div id="headingBasemaps" class="panel-heading" role="tab">
+        <div class="panel-title">
+          <a class="panel-toggle collapsed" role="button" data-toggle="collapse" href="#collapseBasemaps" aria-expanded="false"   aria-controls="collapseBasemaps"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span><span class="panel-label">Basemaps</span></a>
+          <a class="panel-close" role="button" data-toggle="collapse" data-target="#panelBasemaps"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>  
+        </div>
+      </div>
+      <div id="collapseBasemaps" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingBasemaps">
+        <div class="panel-body">
+          <select id="selectBasemapPanel" class="form-control">
+            <option value="streets" data-vector="streets-vector">Streets</option>
+            <option value="satellite" data-vector="satellite" selected="">Satellite</option>
+            <option value="hybrid" data-vector="hybrid">Hybrid</option>
+            <option value="national-geographic" data-vector="national-geographic">National Geographic</option>
+            <option value="topo" data-vector="topo-vector">Topographic</option>
+            <option value="gray" data-vector="gray-vector">Gray</option>
+            <option value="dark-gray" data-vector="dark-gray-vector">Dark Gray</option>
+            <option value="osm" data-vector="osm">Open Street Map</option>
+            <option value="dark-gray" data-vector="streets-night-vector">Streets Night</option>
+            <option value="streets" data-vector="streets-navigation-vector">Streets Mobile</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
     <!-- Code Panel -->
     
     <div id="panelCode" class="panel collapse in">
       <div id="headingCode" class="panel-heading" role="tab">
         <div class="panel-title">
-          <a class="panel-toggle" role="button" data-toggle="collapse" href="#collapseInfo" data-parent="#panelAccordion" aria-expanded="true" aria-controls="collapseInfo"><span class="glyphicon glyphicon-wrench hidden" aria-hidden="true"></span> ArcGIS JS 4.0</a>
+          <a class="panel-toggle" role="button" data-toggle="collapse" href="#collapseCode" data-parent="#panelAccordion" aria-expanded="true" aria-controls="collapseInfo"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span><span class="panel-label"> Code</span></a>
           <a class="panel-close" role="button" data-toggle="collapse" data-target="#panelCode"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>  
         </div>
       </div>
 
-      <div id="collapseInfo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingCode">
+      <div id="collapseCode" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingCode">
         <div class="panel-body">
           <!-- Your code goes here -->
           <pre class="prettyprint lang-js calcite-bgcolor-black">
@@ -163,10 +188,12 @@ activeView = app.sceneView;
       packages: [{
         name: "bootstrap",
         location: "https://esri.github.io/calcite-maps/dist/vendor/dojo-bootstrap"
+        //location: "http://localhost/GitHub/calcite-maps/dist/vendor/dojo-bootstrap"
       },
       {
         name: "calcite-maps",
         location: "https://esri.github.io/calcite-maps/dist/js/dojo"
+        //location: "http://localhost/GitHub/calcite-maps/dist/js/dojo"
       }]
     };
   </script>
@@ -202,12 +229,9 @@ activeView = app.sceneView;
         scale: 50000000,
         center: [-40,40],
         initialExtent: null,
-        basemap: "satellite",
+        basemap: "dark-gray",
         viewPadding: {
-            top: 65
-        },
-        uiPadding: {
-            top: 15
+            top: 50
         },
         mapView: null,
         sceneView: null,
@@ -226,8 +250,7 @@ activeView = app.sceneView;
         center: app.center,
         padding: app.viewPadding,
         ui: {
-          components: ["zoom", "compass", "attribution"],
-          padding: app.uiPadding
+          components: ["zoom", "compass", "attribution"]
       }
       });
    
@@ -241,10 +264,6 @@ activeView = app.sceneView;
         scale: app.scale,
         center: app.center,
         padding: app.viewPadding,
-        ui: {
-            padding: app.uiPadding
-        },
-        visible: true
       });
 
       app.activeView = app.sceneView;
@@ -300,11 +319,6 @@ activeView = app.sceneView;
         }
         syncSearch();
       }); 
-
-      // Home
-      query(".calcite-navbar .navbar-brand").on("click", function(e) {
-        app.activeView.goTo({target: app.initialExtent, rotation: 0});
-      })
 
     });
 
