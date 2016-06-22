@@ -12,7 +12,7 @@ A collection of apps built with <a href="http://github.com/esri/calcite-maps">Ca
 * Panel
 * Prism HTML/CSS/JS formatter
 
-#####<a href="http://alaframboise.github.io/calcite-maps-apps/simple-styler/">Simple Styler</a>
+#####<a href="http://alaframboise.github.io/calcite-maps-apps/sdk-sample/">SDK Sample</a>
 * Widget themes (light and dark)
 * Navbar themes (light and dark)
 * Layout (top and bottom)
